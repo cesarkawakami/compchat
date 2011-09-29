@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+    <meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no" />
+    <title>CompChat!</title>
+    <link rel="stylesheet" href="{{ static_url("chat.css") }}" type="text/css"/>
+  </head>
+  <body>
+    <div id="body">
+      <div id="inbox">
+        {% for message in messages %}
+          {% module Template("message.html", message=message) %}
+        {% end %}
+      </div>
+      <div id="input">
+        <form action="/a/message/new" method="post" id="messageform">
+          <div>
+            <input name="username"
+                   id="username"
+                   style="width: 100%"
+                   value="username here"/>
+          </div>
+          <div>
+		    <textarea id="message"
+		              name="body"
+		              rows="24"
+		              style="width: 100%">
+		      message here
+		    </textarea>
+		  </div>
+          <input type="hidden" name="next" value="{{ request.path }}"/>
+          {% module xsrf_form_html() %}
+        </form>
+      </div>
+    </div>
+    <script src="{{ static_url('jquery.min.js') }}"></script>
+    <script src="{{ static_url('chat.js') }}"></script>
+  </body>
+</html>
